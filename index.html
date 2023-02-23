@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div><p>Inicio</p></div>
+            <div><p>Agregar Venta</p></div>
+            <div><p>Agregar Producto</p></div>
+        </nav>
+    </header>
+    <main>
+        <table id="tabla-inventario">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio de compra</th>
+                <th>Precio de venta</th>
+                <th>Ganancia</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          
+    </main>
+
+    <section class="agregarP">
+        <h2>Formulario de inventario</h2>
+        <form id="formulario-inventario" class="formulario">
+            <label for="nombre-producto">Nombre del producto:</label>
+            <input type="text" id="nombre-producto" name="nombre-producto" required><br>
+            
+            <label for="cantidad-producto">Cantidad:</label>
+            <input type="number" id="cantidad-producto" name="cantidad-producto" required><br>
+            
+            <label for="precio-compra">Precio de compra:</label>
+            <input type="number" id="precio-compra" name="precio-compra" required><br>
+            
+            <label for="precio-venta">Precio de venta:</label>
+            <input type="number" id="precio-venta" name="precio-venta" required><br>
+            
+            <button type="button" onclick="agregarProducto()">Agregar producto</button>
+        </form>
+    </section>
+
+    <script src="./main.js"></script>
+</body>
+</html>
