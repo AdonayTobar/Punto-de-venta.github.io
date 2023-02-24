@@ -17,25 +17,27 @@ nav {
 
 nav div p {
     color: #333;
-    font-size: 2rem;
+    font-size: 1rem;
     cursor: pointer;
     font-weight: bold;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif ;
 }
 /* La tabla del inventario */
-
+main {
+    width: 100%;
+}
 table {
 
     margin: 5rem auto;
     border-collapse: collapse;
-    width: 80%;
+    max-width: 70rem;
   }
   
   th, td {
-    padding: 12px;
+    padding: 1rem;
     text-align: left;
     border: 1px solid #ddd;
-    font-size: 2rem;
+    font-size: 1rem;
   }
   
   th {
@@ -52,19 +54,20 @@ table {
     background-color: rgb(240, 240, 240);
   }
   
-  .table-container {
+  .tabla-inventario {
     background-color: white;
     border: 1px solid #ddd;
-    padding: 20px;
+    padding: 2rem;
   }
   /* El formulario */
 
 
   .agregarP {
     text-align: center;
+    width: 100%;
   }
   h2{
-    font-size: 5rem;
+    font-size: 3rem;
     margin-bottom: 4rem;
   }
   .formulario {
@@ -78,7 +81,7 @@ table {
   label {
     display: block;
     margin-bottom: 5px;
-    font-size: 2rem;
+    font-size: 1.3rem;
   }
   
   input[type="text"],
@@ -87,9 +90,9 @@ table {
     border: 1px solid #ccc;
     border-radius: 3px;
     margin-bottom: 10px;
-    width: 30%;
+    max-width: 50rem;
     height: 3rem;
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
   
   button {
