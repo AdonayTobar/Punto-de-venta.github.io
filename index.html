@@ -10,31 +10,33 @@
 <body>
     <header>
         <nav>
-            <div><p>Inicio</p></div>
-            <div><p>Agregar Venta</p></div>
-            <div><p>Agregar Producto</p></div>
+            <div><p class="inicio">Inicio</p></div>
+            <div><p class="agregarVenta">Agregar Venta</p></div>
+            <div><p class="agregarProducto">Agregar Producto</p></div>
         </nav>
     </header>
-    <main>
-        <table id="tabla-inventario">
+    <main >
+        <!-- Tabla de inventario completo -->
+        <table id="tabla-inventario-completo" class="inventario">
             <thead>
-              <tr>
+            <tr>
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Cantidad</th>
                 <th>Precio de compra</th>
                 <th>Precio de venta</th>
                 <th>Ganancia</th>
-              </tr>
+            </tr>
             </thead>
             <tbody>
             </tbody>
-          </table>
+        </table>
+  
           
     </main>
 
-    <section class="agregarP">
-        <h2>Formulario de inventario</h2>
+    <section class="agregarP inactive">
+        <h2>Ingreso de productos</h2>
         <form id="formulario-inventario" class="formulario">
             <label for="nombre-producto">Nombre del producto:</label>
             <input type="text" id="nombre-producto" name="nombre-producto" required><br>
@@ -50,6 +52,43 @@
             
             <button type="button" onclick="agregarProducto()">Agregar producto</button>
         </form>
+    </section>
+
+    <section class="ventaA inactive">
+                <!-- Campo de entrada para buscar productos -->
+        <input type="text" id="busqueda" placeholder="Buscar producto...">
+
+                <!-- Tabla de inventario -->
+                <!-- Tabla de inventario filtrado -->
+        <table id="tabla-inventario-filtrado">
+        <thead>
+            <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio de venta</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        </table>
+
+        <table id="tabla-carrito">
+            <thead>
+              <tr>
+                <th>Cantidad</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Precio total</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+          <button class="boton">Realizar Venta</button>
+          
+          
+          
     </section>
 
     <script src="./main.js"></script>

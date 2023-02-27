@@ -1,3 +1,35 @@
+const venta = document.querySelector(".agregarProducto");
+const agregarVenta = document.querySelector(".agregarP");
+const inventario1  = document.querySelector(".inventario");
+const inicio = document.querySelector(".inicio");
+const ventaNueva = document.querySelector(".agregarVenta");
+const nuevaVenta = document.querySelector(".ventaA");
+
+
+venta.addEventListener("click", ventanaVenta);
+inicio.addEventListener("click", inicioVentana);
+ventaNueva.addEventListener("click", buscarV);
+
+ function inicioVentana(){
+  inventario1.classList.remove("inactive");
+  agregarVenta.classList.add("inactive");
+  nuevaVenta.classList.add("inactive");
+}
+
+
+function ventanaVenta(){
+  agregarVenta.classList.remove("inactive");
+  inventario1.classList.add("inactive");
+  nuevaVenta.classList.add("inactive");
+}
+
+function buscarV(){
+  nuevaVenta.classList.remove("inactive");
+  inventario1.classList.add("inactive");
+  agregarVenta.classList.add("inactive");
+}
+
+
 let inventario = [];
 
 function agregarProducto() {
@@ -31,17 +63,27 @@ function agregarProducto() {
 }
 
 function mostrarInventario() {
-  // Obtener la tabla de inventario
-  let tabla = document.getElementById('tabla-inventario');
+  // Obtener la tabla de inventario completa
+  let tablaCompleta = document.getElementById('tabla-inventario-completo');
 
-  // Eliminar todos los elementos de la tabla excepto la fila de encabezado
-  while (tabla.rows.length > 1) {
-    tabla.deleteRow(1);
+  // Obtener la tabla de inventario filtrado
+  let tablaFiltrada = document.getElementById('tabla-inventario-filtrado');
+
+  // Obtener el texto de búsqueda
+  let textoBusqueda = document.getElementById('busqueda').value.toLowerCase();
+
+  // Eliminar todos los elementos de las tablas excepto la fila de encabezado
+  while (tablaCompleta.rows.length > 1) {
+    tablaCompleta.deleteRow(1);
+  }
+  
+  while (tablaFiltrada.rows.length > 1) {
+    tablaFiltrada.deleteRow(1);
   }
 
-  // Agregar una fila por cada producto en el inventario
+  // Agregar una fila por cada producto en el inventario completo
   inventario.forEach(function(producto) {
-    let fila = tabla.insertRow();
+    let fila = tablaCompleta.insertRow();
     fila.insertCell().textContent = producto.id;
     fila.insertCell().textContent = producto.nombre;
     fila.insertCell().textContent = producto.cantidad;
@@ -49,6 +91,131 @@ function mostrarInventario() {
     fila.insertCell().textContent = '$' + producto.precioVenta;
     fila.insertCell().textContent = '$' + producto.ganancia;
   });
+
+  // Agregar una fila por cada producto en el inventario que coincida con el texto de búsqueda
+  inventario.forEach(function(producto) {
+    if (producto.nombre.toLowerCase().includes(textoBusqueda)) {
+      let fila = tablaFiltrada.insertRow();
+      fila.insertCell().textContent = producto.id;
+      fila.insertCell().textContent = producto.nombre;
+      fila.insertCell().textContent = producto.cantidad;
+      fila.insertCell().textContent = '$' + producto.precioVenta;
+      
+      // Agregar el botón "Agregar al carrito" a la última celda de la fila
+      let agregarCarritoBtn = document.createElement('button');
+      agregarCarritoBtn.textContent = '+';
+      fila.insertCell().appendChild(agregarCarritoBtn);
+      
+      // Agregar el evento de escucha de clic al botón "Agregar al carrito"
+      agregarCarritoBtn.addEventListener('click', function() {
+        agregarAlCarrito(producto);
+      });
+    }
+  });
 }
+
+let carrito = []; // Array para almacenar los productos seleccionados
+
+function agregarAlCarrito(producto) {
+  // Validar que hay suficiente cantidad en el inventario
+  if (producto.cantidadEnInventario < 1) {
+    alert('No hay suficiente cantidad en el inventario para este producto.');
+    return;
+  }
+
+  carrito.push(producto); // Agregar el producto al array del carrito
+
+  // Mostrar los productos del carrito en una tabla
+  let tablaCarrito = document.getElementById('tabla-carrito');
+  let fila = tablaCarrito.insertRow();
+  
+  // Insertar celda de cantidad editable
+  let cantidadEditable = document.createElement('input');
+  cantidadEditable.type = 'number';
+  cantidadEditable.value = 1;
+  cantidadEditable.min = 1;
+  cantidadEditable.max = producto.cantidadEnInventario; // Agregar el límite máximo de cantidad
+  cantidadEditable.addEventListener('input', function() {
+    // Validar que la cantidad no sobrepase la cantidad en el inventario
+    if (this.value > producto.cantidad) {
+      alert('No hay suficiente cantidad en el inventario para este producto.');
+      this.value = producto.cantidad; // Restablecer el valor al máximo
+    }
+
+    // Actualizar el precio total al cambiar la cantidad
+    let precioTotal = this.value * producto.precioVenta;
+    fila.cells[3].textContent = '$' + precioTotal.toFixed(2);
+
+
+  });
+  fila.insertCell().appendChild(cantidadEditable);
+  
+  // Insertar celda de nombre
+  fila.insertCell().textContent = producto.nombre;
+  
+  // Insertar celda de precio
+  fila.insertCell().textContent = '$' + producto.precioVenta;
+  
+  // Insertar celda de precio total
+  fila.insertCell().textContent = '$' + producto.precioVenta.toFixed(2);
+
+
+ 
+  // Agregar botón al final de la tabla para descontar cantidades del inventario
+let boton = document.querySelector(".boton")
+boton.addEventListener('click', function() {
+  // Descontar cantidades del inventario principal
+
+
+  
+  for (let i = 0; i < carrito.length; i++) {
+    let producto = carrito[i];
+    let cantidadCarrito = 0;
+  
+    // Encontrar la cantidad actualizada del producto en el carrito
+    let tablaCarrito = document.getElementById('tabla-carrito');
+    for (let j = 0; j < tablaCarrito.rows.length; j++) {
+      let fila = tablaCarrito.rows[j];
+      if (fila.cells[1].textContent === producto.nombre) {
+        cantidadCarrito += parseInt(fila.cells[0].children[0].value);
+      }
+    }
+  
+    // Restar la cantidad del producto en el carrito a la cantidad en el inventario
+    for (let j = 0; j < inventario.length; j++) {
+      if (inventario[j].id === producto.id) {
+        inventario[j].cantidad -= cantidadCarrito;
+        mostrarInventario();
+        console.log(inventario[j].cantidad)
+        break;
+      }
+    }
+    console.log(cantidadCarrito);
+    
+  }
+  
+  // Limpiar el carrito y la tabla de la compra
+  carrito = [];
+  while (tablaCarrito.rows.length > 1) {
+    tablaCarrito.deleteRow(1);
+  }
+
+});
+
+}
+
+
+
+
+
+// Mostrar el inventario por primera vez
+mostrarInventario();
+
+// Agregar un evento de escucha al campo de entrada para actualizar la tabla en función del texto de búsqueda
+let campoBusqueda = document.getElementById('busqueda');
+campoBusqueda.addEventListener('input', function() {
+  mostrarInventario();
+});
+
 
 
