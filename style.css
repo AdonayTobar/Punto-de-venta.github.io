@@ -18,7 +18,9 @@ nav {
     justify-content: space-around;
     align-items: center;
 }
-
+nav img{
+  width: 3rem;
+}
 nav div p {
     color: #333;
     font-size: 1rem;
@@ -127,11 +129,32 @@ table {
 .ventaA {
   text-align: center;
 }
+/* Agregar al carrito */
+#cliente {
+  margin-top: 3rem;
+}
+#tabla-carrito {
+  width: 70%;
+}
+
+
+#tabla-carrito td{
+  font-size: 1.5rem;
+}
+
+#tabla-carrito input{
+width: 3rem;
+}
+
 
 #busqueda {
   width: 50%;
   margin-top: 4rem;
 }
+#tabla-inventario-filtrado{
+  width: 70%;
+}
+
 #tabla-inventario-filtrado td{
   height: 3rem;
   width: auto;
@@ -155,15 +178,26 @@ table {
   margin: auto 0 auto 1rem;
 }
 
-/* Agregar al carrito */
-#tabla-carrito {
-  width: 50%;
+/* ventana de las compras */
+
+.comprasF{
+  text-align: center;
 }
 
-#tabla-carrito td{
+#buscar-venta{
+  margin-top: 3rem;
+}
+
+#tabla-ventas{
+  width: 70%;
+}
+
+.facturas {
+  width: 100%;
   font-size: 1.5rem;
 }
 
-#tabla-carrito input{
-width: 3rem;
+.facturas td{
+  font-size: 1.5rem;
 }
+

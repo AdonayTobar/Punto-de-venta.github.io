@@ -10,9 +10,11 @@
 <body>
     <header>
         <nav>
-            <div><p class="inicio">Inicio</p></div>
-            <div><p class="agregarVenta">Agregar Venta</p></div>
-            <div><p class="agregarProducto">Agregar Producto</p></div>
+            <div><img src="./SVG/align-justify-svgrepo-com.svg" alt="" class="inicio"></div>
+            <div><img src="./SVG/file-arrow-up-svgrepo-com.svg" alt="" class="agregarVenta"></div>
+            <div><img src="./SVG/file-arrow-down-svgrepo-com.svg" alt=""></div>
+            <div><img src="./SVG/file-plus-svgrepo-com.svg" alt="" class="agregarProducto"></div>
+            <div><img src="./SVG/clipboard-svgrepo-com.svg" alt="" class="mostrarCompras"></div>
         </nav>
     </header>
     <main >
@@ -55,40 +57,74 @@
     </section>
 
     <section class="ventaA inactive">
-                <!-- Campo de entrada para buscar productos -->
-        <input type="text" id="busqueda" placeholder="Buscar producto...">
 
-                <!-- Tabla de inventario -->
-                <!-- Tabla de inventario filtrado -->
-        <table id="tabla-inventario-filtrado">
-        <thead>
-            <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Precio de venta</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        </table>
-
+        <div>
+          <input type="text" id="cliente" name="cliente" placeholder="Ingrese el nombre del cliente">
+          
         <table id="tabla-carrito">
             <thead>
-              <tr>
+            <tr>
                 <th>Cantidad</th>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Precio total</th>
-              </tr>
+            </tr>
             </thead>
             <tbody>
             </tbody>
+        </table>
+        <button class="boton">Realizar Venta</button>
+        </div>
+
+
+        <div>
+                    <!-- Campo de entrada para buscar productos -->
+            <input type="text" id="busqueda" placeholder="Buscar producto...">
+
+                    <!-- Tabla de inventario -->
+                    <!-- Tabla de inventario filtrado -->
+            <table id="tabla-inventario-filtrado">
+            <thead>
+                <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio de venta</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            </table>
+        </div>
+        
+        
+
+        
+          
+          
+          
+    </section>
+
+    <section class="comprasF inactive">
+        <input type="text" id="buscar-venta" oninput="mostrarVentas()" placeholder="Nombre del cliente">
+
+
+        <h2 class="nombreC"></h2>
+        <table id="tabla-ventas">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Productos</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Aquí se agregarán las filas de ventas -->
+            </tbody>
           </table>
-          <button class="boton">Realizar Venta</button>
           
-          
-          
+
     </section>
 
     <script src="./main.js"></script>
