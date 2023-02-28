@@ -17,6 +17,7 @@ nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    position: fixed;
 }
 nav img{
   width: 3rem;
@@ -31,10 +32,10 @@ nav div p {
 /* La tabla del inventario */
 main {
     width: 100%;
+    padding-top: 9rem;
 }
 table {
-
-    margin: 5rem auto;
+    margin: 0 auto;
     border-collapse: collapse;
     max-width: 70rem;
   }
@@ -131,7 +132,7 @@ table {
 }
 /* Agregar al carrito */
 #cliente {
-  margin-top: 3rem;
+  /* margin-top: 9rem; */
 }
 #tabla-carrito {
   width: 70%;
@@ -185,7 +186,7 @@ width: 3rem;
 }
 
 #buscar-venta{
-  margin-top: 3rem;
+  /* margin-top: 9rem; */
 }
 
 #tabla-ventas{
@@ -199,5 +200,19 @@ width: 3rem;
 
 .facturas td{
   font-size: 1.5rem;
+}
+
+
+
+
+#ventana-editar-producto {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 

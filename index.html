@@ -17,9 +17,10 @@
             <div><img src="./SVG/clipboard-svgrepo-com.svg" alt="" class="mostrarCompras"></div>
         </nav>
     </header>
-    <main >
+    <main class="inventario">
+        <input type="text" id="busqueda1" placeholder="Nombre del producto">
         <!-- Tabla de inventario completo -->
-        <table id="tabla-inventario-completo" class="inventario">
+        <table id="tabla-inventario-completo" >
             <thead>
             <tr>
                 <th>ID</th>
@@ -61,18 +62,20 @@
         <div>
           <input type="text" id="cliente" name="cliente" placeholder="Ingrese el nombre del cliente">
           
-        <table id="tabla-carrito">
+          <table id="tabla-carrito">
             <thead>
-            <tr>
+              <tr>
                 <th>Cantidad</th>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Precio total</th>
-            </tr>
+              </tr>
             </thead>
             <tbody>
             </tbody>
-        </table>
+          </table>
+          
+          
         <button class="boton">Realizar Venta</button>
         </div>
 
