@@ -47,8 +47,8 @@ function agregarProducto() {
   // Obtener los valores del formulario
   let nombre = document.getElementById('nombre-producto').value;
   let cantidad = parseInt(document.getElementById('cantidad-producto').value);
-  let precioCompra = parseInt(document.getElementById('precio-compra').value);
-  let precioVenta = parseInt(document.getElementById('precio-venta').value);
+  let precioCompra = parseFloat(document.getElementById('precio-compra').value);
+  let precioVenta = parseFloat(document.getElementById('precio-venta').value);
 
   // Crear un objeto con los datos del producto
   let producto = {
@@ -57,7 +57,7 @@ function agregarProducto() {
     cantidad: cantidad,
     precioCompra: precioCompra,
     precioVenta: precioVenta,
-    ganancia: (precioVenta - precioCompra) * cantidad
+    ganancia: ((precioVenta - precioCompra) * cantidad).toFixed(2)
   };
 
   // Agregar el producto al array de inventario
