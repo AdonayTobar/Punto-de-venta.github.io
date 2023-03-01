@@ -409,66 +409,80 @@ totalCompraCel.textContent = '$' + totalCompra.toFixed(2);
 fila.insertCell().appendChild(botonEliminar);
 
 
+      // Agregar botón al final de la tabla para descontar cantidades del inventario
+      let boton = document.querySelector("#botonGuardar");
+      boton.addEventListener('click', function() {
+    
+            let cliente = document.getElementById('cliente').value;
 
+
+              // código a ejecutar cuando se detecta un cambio en el valor del input
+              if (cliente == '') {
+              alert('Debes ingresar el nombre del cliente antes de guardar la venta.');
+              return;
+            } 
+            // Descontar cantidades del inventario principal
+              for (let i = 0; i < carrito.length; i++) {
+                let producto = carrito[i];
+    
+                for (let j = 0; j < inventario.length; j++) {
+                  if (inventario[j].id === producto.id) {
+                    inventario[j].cantidad -= producto.cantidad;
+                    mostrarInventario();
+                    break;
+                  }
+                }
+              }
+    
+              
+    
+              // Crear la venta y agregarla al array de ventas
+              let venta = {
+                cliente: cliente,
+                productos: carrito.slice(),// Hacer una copia del array del carrito para evitar que se modifique la venta después
+                fecha: new Date().toLocaleString()
+              };
+              ventas.push(venta);
+    
+              // Limpiar el carrito y la tabla de la compra
+              carrito = [];
+              while (tablaCarrito.rows.length > 1) {
+                tablaCarrito.deleteRow(1);
+              }
+              totalCompraCel.textContent = '$0.00';
+              document.getElementById('cliente').value = '';
+              mostrarVentas();
+            
+            
+    
+              
+            
+    
+              
+              
+        });
 
   
-  // Agregar botón al final de la tabla para descontar cantidades del inventario
-  let boton = document.querySelector(".boton");
-  boton.addEventListener('click', function() {
 
-  let cliente = document.getElementById('cliente').value;
-
-  if (cliente.trim() === '') {
-    alert('Debes ingresar el nombre del cliente antes de guardar la venta.');
-    return;
-  }
-
-    
-    // Descontar cantidades del inventario principal
-    for (let i = 0; i < carrito.length; i++) {
-      let producto = carrito[i];
-
-      for (let j = 0; j < inventario.length; j++) {
-        if (inventario[j].id === producto.id) {
-          inventario[j].cantidad -= producto.cantidad;
-          mostrarInventario();
-          break;
-        }
-      }
-    }
-
-    
-
-    // Crear la venta y agregarla al array de ventas
-    let venta = {
-      cliente: cliente,
-      productos: carrito.slice() // Hacer una copia del array del carrito para evitar que se modifique la venta después
-    };
-    ventas.push(venta);
-
-    // Limpiar el carrito y la tabla de la compra
-    carrito = [];
-    while (tablaCarrito.rows.length > 1) {
-      tablaCarrito.deleteRow(1);
-    }
-    totalCompraCel.textContent = '$0.00';
-    document.getElementById('cliente').value = '';
-    mostrarVentas();
-  });
 
 }
 
 
 
 
-function mostrarVentas() {
 
-  
+
+
+
+
+function mostrarVentas() {
   let tablaVentas = document.getElementById('tabla-ventas');
   tablaVentas.innerHTML = ''; // Limpiar la tabla antes de volver a mostrar las ventas
 
   let inputBuscar = document.getElementById('buscar-venta');
   let filtro = inputBuscar.value.toLowerCase();
+
+  ventas.reverse();
 
   ventas.forEach(function(venta) {
     // Filtrar las ventas por cliente
@@ -477,12 +491,20 @@ function mostrarVentas() {
       let tablaVenta = document.createElement('table');
       tablaVenta.classList.add("facturas");
 
-      // Crear la fila de encabezado
+      // Crear la fila de encabezado con nombre del cliente
       let encabezado = tablaVenta.createTHead().insertRow();
-      encabezado.insertCell().textContent = 'Cantidad';
-      encabezado.insertCell().textContent = 'Producto';
-      encabezado.insertCell().textContent = 'Precio';
-      encabezado.insertCell().textContent = 'Precio Total';
+      encabezado.insertCell().textContent = 'Cliente:';
+      encabezado.insertCell().textContent = venta.cliente;
+      let fechaHoraCell = encabezado.insertCell();
+      fechaHoraCell.colSpan = 2;
+      fechaHoraCell.textContent = venta.fecha;
+
+      // Crear la fila de encabezado de productos
+      let encabezadoProductos = tablaVenta.createTHead().insertRow();
+      encabezadoProductos.insertCell().textContent = 'Cantidad';
+      encabezadoProductos.insertCell().textContent = 'Producto';
+      encabezadoProductos.insertCell().textContent = 'Precio';
+      encabezadoProductos.insertCell().textContent = 'Precio Total';
 
       // Crear una fila por cada producto en la venta
       let precioTotalVenta = 0;
@@ -506,11 +528,12 @@ function mostrarVentas() {
       // Agregar la tabla de la venta a la tabla de ventas
       let fila = tablaVentas.insertRow();
       let celda = fila.insertCell();
-      celda.colSpan = 2;
+      celda.colSpan = 4;
       celda.appendChild(tablaVenta);
     }
   });
 }
+
 
 
 // Mostrar el inventario por primera vez
