@@ -112,6 +112,7 @@ function mostrarInventario() {
 
   // Agregar una fila por cada producto en el inventario completo
   inventario.forEach(function(producto) {
+    if (producto.nombre.toLowerCase().includes(textoBusqueda1)) {
     let fila = tablaCompleta.insertRow();
     fila.insertCell().textContent = producto.id;
     fila.insertCell().textContent = producto.nombre;
@@ -119,11 +120,14 @@ function mostrarInventario() {
     fila.insertCell().textContent = '$' + producto.precioCompra;
     fila.insertCell().textContent = '$' + producto.precioVenta;
     fila.insertCell().textContent = '$' + producto.ganancia;
-    
+
     // Agregar evento de escucha de clic a la fila
     fila.addEventListener('click', function() {
       mostrarVentanaEditarProducto(producto);
         });
+    }
+    
+    
   });
 
 
@@ -293,6 +297,19 @@ function agregarAlCarrito(producto) {
   };
   carrito.push(productoCarrito);
 
+  // Actualizar el total de la compra
+totalCompra = 0; // Inicializar el total en 0
+carrito.forEach(function(producto) {
+  totalCompra += producto.precioVenta * producto.cantidad;
+});
+
+// Actualizar la celda correspondiente en la tabla de totales
+let totalCompraCel = document.getElementById('total-compra');
+totalCompraCel.textContent = '$' + totalCompra.toFixed(2)
+    
+
+  
+
 
   // Mostrar los productos del carrito en una tabla
   let tablaCarrito = document.getElementById('tabla-carrito');
@@ -324,21 +341,18 @@ carrito.forEach(function(producto) {
   totalCompra += producto.precioVenta * producto.cantidad;
 });
 
-// Insertar fila con el total de la compra si no existe
-let filaTotal = tablaCarrito.querySelector(".total"); // Buscar la fila del total
-if (!filaTotal) { // Si la fila del total no existe, crearla
-  filaTotal = tablaCarrito.insertRow(); // Añadir una nueva fila al final de la tabla
-  filaTotal.insertCell().colSpan = 2; // Añadir una celda que ocupe 2 columnas
-  filaTotal.insertCell().textContent = "Total";
-  filaTotal.insertCell().textContent = "$" + totalCompra.toFixed(2); // Añadir una celda con el total de la compra
-  filaTotal.classList.add("total"); // Agregar una clase para identificar la fila del total
-}
-else { // Si la fila del total existe, actualizar su valor
-  filaTotal.cells[2].textContent = "$" + totalCompra.toFixed(2); // Actualizar el valor de la celda del total de la compra
-}
 
-// Mover la fila del total al final de la tabla
-tablaCarrito.appendChild(filaTotal);
+
+
+// Actualizar el total de la compra
+totalCompra = 0; // Inicializar el total en 0
+carrito.forEach(function(producto) {
+  totalCompra += producto.precioVenta * producto.cantidad;
+});
+
+// Actualizar la celda correspondiente en la tabla de totales
+let totalCompraCel = document.getElementById('total-compra');
+totalCompraCel.textContent = '$' + totalCompra.toFixed(2);
 
 
 
@@ -361,12 +375,55 @@ tablaCarrito.appendChild(filaTotal);
   // Insertar celda de precio total
   fila.insertCell().textContent = '$' + producto.precioVenta.toFixed(2);
 
+  // Crear botón para eliminar producto del carrito
+let botonEliminar = document.createElement('button');
+botonEliminar.textContent = 'x';
+botonEliminar.classList.add('boton-eliminar');
+botonEliminar.addEventListener('click', function() {
+  // Eliminar el producto del carrito
+  let index = carrito.findIndex(function(producto) {
+    return producto.id === productoCarrito.id;
+  });
+  carrito.splice(index, 1);
+
+  // Actualizar la tabla del carrito
+  tablaCarrito.deleteRow(fila.rowIndex);
+
+  // Actualizar el total de la compra
+  totalCompra = 0;
+  carrito.forEach(function(producto) {
+    totalCompra += producto.precioVenta * producto.cantidad;
+  });
+
+  // Actualizar la celda correspondiente en la tabla de totales
+let totalCompraCel = document.getElementById('total-compra');
+totalCompraCel.textContent = '$' + totalCompra.toFixed(2);
+
+
+  // Actualizar la fila del total de la compra
+  //let filaTotal = tablaCarrito.querySelector('.total');
+  //filaTotal.cells[1].textContent = '$' + totalCompra.toFixed(2);
+});
+
+// Agregar botón al final de la fila
+fila.insertCell().appendChild(botonEliminar);
+
+
 
 
   
   // Agregar botón al final de la tabla para descontar cantidades del inventario
   let boton = document.querySelector(".boton");
   boton.addEventListener('click', function() {
+
+  let cliente = document.getElementById('cliente').value;
+
+  if (cliente.trim() === '') {
+    alert('Debes ingresar el nombre del cliente antes de guardar la venta.');
+    return;
+  }
+
+    
     // Descontar cantidades del inventario principal
     for (let i = 0; i < carrito.length; i++) {
       let producto = carrito[i];
@@ -380,9 +437,11 @@ tablaCarrito.appendChild(filaTotal);
       }
     }
 
+    
+
     // Crear la venta y agregarla al array de ventas
     let venta = {
-      cliente: document.getElementById('cliente').value,
+      cliente: cliente,
       productos: carrito.slice() // Hacer una copia del array del carrito para evitar que se modifique la venta después
     };
     ventas.push(venta);
@@ -392,7 +451,7 @@ tablaCarrito.appendChild(filaTotal);
     while (tablaCarrito.rows.length > 1) {
       tablaCarrito.deleteRow(1);
     }
-
+    totalCompraCel.textContent = '$0.00';
     document.getElementById('cliente').value = '';
     mostrarVentas();
   });
@@ -403,6 +462,8 @@ tablaCarrito.appendChild(filaTotal);
 
 
 function mostrarVentas() {
+
+  
   let tablaVentas = document.getElementById('tabla-ventas');
   tablaVentas.innerHTML = ''; // Limpiar la tabla antes de volver a mostrar las ventas
 
@@ -463,7 +524,7 @@ campoBusqueda.addEventListener('input', function() {
 });
 
 let campoBusqueda1 = document.getElementById('busqueda1');
-campoBusqueda.addEventListener('input', function() {
+campoBusqueda1.addEventListener('input', function() {
   mostrarInventario();
 });
 

@@ -33,6 +33,10 @@ nav div p {
 main {
     width: 100%;
     padding-top: 9rem;
+    text-align: center;
+}
+main input{
+  width: 50%;
 }
 table {
     margin: 0 auto;
@@ -76,6 +80,7 @@ table {
   .agregarP {
     text-align: center;
     width: 100%;
+    padding: 7rem;
   }
   h2{
     font-size: 3rem;
@@ -129,6 +134,7 @@ table {
 
 .ventaA {
   text-align: center;
+  padding-top: 7rem;
 }
 /* Agregar al carrito */
 #cliente {
@@ -147,10 +153,43 @@ table {
 width: 3rem;
 }
 
+#tabla-carrito td:nth-child(5){
+  color: white;
+  background-color: white;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+.boton-eliminar {
+  background-color: rgb(228, 101, 101);
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: auto 0 auto 0;
+}
+
+#tabla-total {
+  margin-top: 2rem;
+  margin-left: 15%;
+  margin-bottom: 2rem;
+  width: 61%;
+  font-size: 1.5rem;
+}
+#tabla-total th{
+  font-size: 1.5rem;
+}
+#tabla-total td{
+  width: 30%;
+  font-size: 1.5rem;
+}
+
 
 #busqueda {
   width: 50%;
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 #tabla-inventario-filtrado{
   width: 70%;
@@ -183,10 +222,11 @@ width: 3rem;
 
 .comprasF{
   text-align: center;
+  padding-top: 7rem;
 }
 
 #buscar-venta{
-  /* margin-top: 9rem; */
+
 }
 
 #tabla-ventas{
